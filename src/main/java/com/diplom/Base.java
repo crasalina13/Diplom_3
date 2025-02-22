@@ -12,5 +12,4 @@ public class Base {
                 .setBaseUri(Endpoints.BASE_URL.getPath())
                 .build();
     }
-
 }

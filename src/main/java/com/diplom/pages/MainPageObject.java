@@ -1,70 +1,65 @@
 package com.diplom.pages;
 
 import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
-import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 
-import static com.codeborne.selenide.Selenide.$;
-
 public class MainPageObject {
 
-    //локатор кнопки Оформить заказ
-    @FindBy(how = How.XPATH, using = ".//button[text()='Оформить заказ']")
+    // Constants
+    private static final String ACTIVE_TAB_CLASS = "tab_tab_type_current__2BEPc";
+
+    // Locators ingredients
+    @FindBy(how = How.XPATH, using = "//h2[contains(text(),'Булки')]/following-sibling::ul")
+    private SelenideElement bunsSection;
+
+    @FindBy(how = How.XPATH, using = "//h2[contains(text(),'Соусы')]/following-sibling::ul")
+    private SelenideElement saucesSection;
+
+    @FindBy(how = How.XPATH, using = "//h2[contains(text(),'Начинки')]/following-sibling::ul")
+    private SelenideElement fillingsSection;
+
+    @FindBy(xpath = "//span[text()='Булки']/parent::div")
+    private SelenideElement bunTab;
+
+    @FindBy(xpath = "//span[text()='Соусы']/parent::div")
+    private SelenideElement sauceTab;
+
+    @FindBy(xpath = "//span[text()='Начинки']/parent::div")
+    private SelenideElement fillingTab;
+
+    // Base locators
+    @FindBy(xpath = "//button[text()='Оформить заказ']")
     private SelenideElement createOrderButton;
 
-    //локатор кнопки Булки
-    @FindBy(how = How.XPATH, using = "//span[text()='Булки']")
-    private SelenideElement bunButton;
-
-    //локатор кнопки Начинки
-    @FindBy(how = How.XPATH, using = ".//span[text()='Начинки']")
-    private SelenideElement fillingButton;
-
-    //локатор кнопки Соусы
-    @FindBy(how = How.XPATH, using = ".//span[text()='Соусы']")
-    private SelenideElement sauceButton;
-
-    //локаторы полей ингридиентов
-    @FindAll({@FindBy(how = How.XPATH, using = ".//ul[@class='BurgerIngredients_ingredients__list__2A-mT']")})
-    private ElementsCollection ingredientsList;
-
-    //локатор кнопки Конструктор
-    @FindBy(how = How.XPATH, using = ".//p[text()='Конструктор']")
+    @FindBy(xpath = "//p[text()='Конструктор']")
     private SelenideElement constructButton;
 
-    //локатор заголовка Соберите бургер
-    @FindBy(how = How.XPATH, using = ".//h1[text()='Соберите бургер']")
+    @FindBy(xpath = "//h1[text()='Соберите бургер']")
     private SelenideElement collectBurgerHeader;
 
-    //локатор logo
-    @FindBy(how = How.XPATH, using = ".//div[@class='AppHeader_header__logo__2D0X2']")
+    @FindBy(className = "AppHeader_header__logo__2D0X2")
     private SelenideElement logoButton;
 
-    //локатор кнопки Личный кабинет
-    @FindBy(how = How.XPATH, using = ".//p[text()='Личный Кабинет']")
+    @FindBy(xpath = "//p[text()='Личный Кабинет']")
     private SelenideElement userAccountButton;
 
-    //локатор кнопки Сохранить
-    @FindBy(how = How.XPATH, using = ".//button[text()='Сохранить']")
+    @FindBy(xpath = "//button[text()='Сохранить']")
     private SelenideElement saveButton;
 
-    //локатор кнопки войти в аккаунт
-    @FindBy(how = How.XPATH, using = ".//button[text()='Войти в аккаунт']")
+    @FindBy(xpath = "//button[text()='Войти в аккаунт']")
     private SelenideElement enterAccountButton;
 
-    //локатор кнопки выход
-    @FindBy(how = How.XPATH, using = ".//button[text()='Выход']")
+    @FindBy(xpath = "//button[text()='Выход']")
     private SelenideElement logoutButton;
 
-    //локатор Заголовка Вход
-    @FindBy(how = How.XPATH, using = ".//h2[text()='Вход']")
-    private SelenideElement headEnter;
+    @FindBy(xpath = "//h2[text()='Вход']")
+    private SelenideElement loginHeader;
 
+    // Checks
     @Step("Check order button is visible")
     public boolean isOrderButtonVisible() {
         return createOrderButton.isDisplayed();
@@ -75,19 +70,19 @@ public class MainPageObject {
         return collectBurgerHeader.isDisplayed();
     }
 
-    @Step("Check ingredients list bun is visible")
-    public boolean isIngredientsListBunVisible() {
-        return ingredientsList.get(0).isDisplayed();
+    @Step("Check buns section is visible")
+    public boolean isBunsSectionVisible() {
+        return bunsSection.isDisplayed();
     }
 
-    @Step("Check ingredients list sauce is visible")
-    public boolean isIngridientsListSauceVisible() {
-        return ingredientsList.get(1).isDisplayed();
+    @Step("Check sauces section is visible")
+    public boolean isSaucesSectionVisible() {
+        return saucesSection.isDisplayed();
     }
 
-    @Step("Check ingredients fillings is visible")
-    public boolean isIngredientsFillingBunVisible() {
-        return ingredientsList.get(2).isDisplayed();
+    @Step("Check fillings section is visible")
+    public boolean isFillingsSectionVisible() {
+        return fillingsSection.isDisplayed();
     }
 
     @Step("Check save button is enabled")
@@ -95,6 +90,7 @@ public class MainPageObject {
         return saveButton.isEnabled();
     }
 
+    // Steps
     @Step("Click login button")
     public LoginPageObject clickEnterAccountButton() {
         enterAccountButton.click();
@@ -107,31 +103,31 @@ public class MainPageObject {
         return this;
     }
 
-    @Step("Click bun button")
-    public MainPageObject clickBunButton() {
-        bunButton.click();
-        checkActiveTab();
+    @Step("Click bun tab")
+    public MainPageObject clickBunTab() {
+        bunTab.click();
+        checkActiveTab(bunTab);
         return this;
     }
 
-    @Step("Click filling button")
-    public MainPageObject clickFillingButton() {
-        fillingButton.click();
-        checkActiveTab();
+    @Step("Click filling tab")
+    public MainPageObject clickFillingTab() {
+        fillingTab.click();
+        checkActiveTab(fillingTab);
         return this;
     }
 
-    @Step("Click sauce button")
-    public MainPageObject clickSauceButton() {
-        sauceButton.click();
-        checkActiveTab();
+    @Step("Click sauce tab")
+    public MainPageObject clickSauceTab() {
+        sauceTab.click();
+        checkActiveTab(sauceTab);
         return this;
     }
 
     @Step("Click logout button")
     public LoginPageObject clickLogoutButton() {
         logoutButton.click();
-        headEnter.shouldBe(Condition.visible);
+        loginHeader.shouldBe(Condition.visible);
         return Selenide.page(LoginPageObject.class);
     }
 
@@ -147,15 +143,14 @@ public class MainPageObject {
         return this;
     }
 
-    public LoginPageObject clickUserAccountButtonIsAuth() {
+    @Step("Click user account button")
+    public LoginPageObject clickUserAccountButtonWhenUnauthorized() {
         userAccountButton.click();
         return Selenide.page(LoginPageObject.class);
     }
 
-    @Step("Check if the active tab has the specified class")
-    private void checkActiveTab() {
-        SelenideElement activeTab = $("div[class*='" + "tab_tab_type_current__2BEPc" + "']");
-        activeTab.shouldBe(Condition.visible);
+    @Step("Check active tab")
+    private void checkActiveTab(SelenideElement tabElement) {
+        tabElement.shouldHave(Condition.cssClass(ACTIVE_TAB_CLASS));
     }
 }
-

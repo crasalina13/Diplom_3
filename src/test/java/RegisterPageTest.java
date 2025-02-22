@@ -5,33 +5,18 @@ import io.qameta.allure.junit4.DisplayName;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.openqa.selenium.WebDriver;
 
 import static com.codeborne.selenide.Selenide.open;
-import static com.diplom.BrowserFactory.BrowserType.CHROME;
-import static com.diplom.BrowserFactory.BrowserType.YANDEX;
 import static org.junit.Assert.assertTrue;
 
-@RunWith(Parameterized.class)
 public class RegisterPageTest {
 
     private WebDriver driver;
-    private final BrowserFactory.BrowserType browser;
-
-    @Parameterized.Parameters(name = "Browser: {0}")
-    public static Object[] data() {
-        return new Object[]{CHROME, YANDEX};
-    }
-
-    public RegisterPageTest(BrowserFactory.BrowserType browser) {
-        this.browser = browser;
-    }
 
     @Before
     public void setUp() {
-        driver = BrowserFactory.getDriver(browser);
+        driver = BrowserFactory.getDriver();
     }
 
     @After

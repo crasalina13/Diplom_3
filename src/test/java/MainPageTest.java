@@ -6,35 +6,20 @@ import io.qameta.allure.junit4.DisplayName;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.openqa.selenium.WebDriver;
 
 import static com.codeborne.selenide.Selenide.open;
-import static com.diplom.BrowserFactory.BrowserType.CHROME;
-import static com.diplom.BrowserFactory.BrowserType.YANDEX;
 import static org.junit.Assert.assertTrue;
 
-@RunWith(Parameterized.class)
 public class MainPageTest {
 
     private UserOperations userOperations;
     private WebDriver driver;
-    private final BrowserFactory.BrowserType browser;
-
-    @Parameterized.Parameters(name = "Browser: {0}")
-    public static Object[] data() {
-        return new Object[]{CHROME, YANDEX};
-    }
-
-    public MainPageTest(BrowserFactory.BrowserType browser) {
-        this.browser = browser;
-    }
 
     @Before
     public void setUp() {
         userOperations = new UserOperations();
-        driver = BrowserFactory.getDriver(browser);
+        driver = BrowserFactory.getDriver();
     }
 
     @After
@@ -80,7 +65,6 @@ public class MainPageTest {
         assertTrue("Save button is enabled", isSaveButtonVisible);
     }
 
-
     @Test
     @DisplayName("Переход по клику на «Конструктор»")
     public void checkGoConstructConstructButton() {
@@ -96,34 +80,34 @@ public class MainPageTest {
     @Test
     @DisplayName("Переход по клику на булки")
     public void checkGoBun() {
-        final boolean isingridientsListBunVisible = open(Endpoints.MAIN_PATH.getPath(), MainPageObject.class)
+        final boolean isBunsSectionVisible = open(Endpoints.MAIN_PATH.getPath(), MainPageObject.class)
                 .clickEnterAccountButton()
                 .successLoginUser(userOperations)
-                .clickFillingButton()
-                .clickBunButton()
-                .isIngredientsListBunVisible();
-        assertTrue("Bun list  is not displayed", isingridientsListBunVisible);
+                .clickFillingTab()
+                .clickBunTab()
+                .isBunsSectionVisible();
+        assertTrue("Buns section is not displayed", isBunsSectionVisible);
     }
 
     @Test
     @DisplayName("Переход по клику на соусы")
     public void checkGoSauce() {
-        final boolean isIngridientsListSauceVisible = open(Endpoints.MAIN_PATH.getPath(), MainPageObject.class)
+        final boolean isSaucesSectionVisible = open(Endpoints.MAIN_PATH.getPath(), MainPageObject.class)
                 .clickEnterAccountButton()
                 .successLoginUser(userOperations)
-                .clickSauceButton()
-                .isIngridientsListSauceVisible();
-        assertTrue("Sauce list is not displayed", isIngridientsListSauceVisible);
+                .clickSauceTab()
+                .isSaucesSectionVisible();
+        assertTrue("Sauces section is not displayed", isSaucesSectionVisible);
     }
 
     @Test
     @DisplayName("Переход по клику на начинки")
     public void checkGoFilling() {
-        final boolean isIngridientsFillingBunVisible = open(Endpoints.MAIN_PATH.getPath(), MainPageObject.class)
+        final boolean isFillingsSectionVisible = open(Endpoints.MAIN_PATH.getPath(), MainPageObject.class)
                 .clickEnterAccountButton()
                 .successLoginUser(userOperations)
-                .clickFillingButton()
-                .isIngredientsFillingBunVisible();
-        assertTrue("Filling list  is not displayed", isIngridientsFillingBunVisible);
+                .clickFillingTab()
+                .isFillingsSectionVisible();
+        assertTrue("Fillings section is not displayed", isFillingsSectionVisible);
     }
 }
